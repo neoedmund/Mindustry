@@ -1,11 +1,11 @@
 { /* neoebuild script
 
 	/opt/openlogic-openjdk-8u342-b07-linux-x64/lib/tools.jar
-					/opt/openlogic-openjdk-8u342-b07-linux-x64/jre/lib/rt.jar
-					
-				
-			
-	
+	/opt/openlogic-openjdk-8u342-b07-linux-x64/jre/lib/rt.jar
+
+
+
+
 */
 	prjs : [
 
@@ -36,7 +36,7 @@
 			} ]
 
 		[ mi_core core { srcDir : [ src build/generated/source/kapt/main assets ]
-				dep : [ mi_annotations ]
+				dep : [ mi_annotations neoeutils ]
 				cp : [
 					/home/neoe/.gradle/caches/modules-2/files-2.1/com.github.Anuken/rhino/73a812444ac388ac2d94013b5cadc8f70b7ea027/a4d5adce051abf063ad1a6aab0259b5bca1c1817/rhino-73a812444ac388ac2d94013b5cadc8f70b7ea027.jar
 					/home/neoe/.gradle/caches/modules-2/files-2.1/org.lz4/lz4-java/1.8.0/4b986a99445e49ea5fbf5d149c4b63f6ed6c6780/lz4-java-1.8.0.jar

@@ -1,0 +1,87 @@
+package mindustry.gen;
+
+/**
+ * Bits used: 64 / 64
+ * <br>  type [0..4]
+ * <br>  x [4..14]
+ * <br>  y [14..24]
+ * <br>  p1 [24..34]
+ * <br>  p2 [34..44]
+ * <br>  p3 [44..54]
+ * <br>  p4 [54..64]
+ */
+public final class DisplayCmd {
+  public static final long bitMaskType = (long)(0b0000000000000000000000000000000000000000000000000000000000001111L);
+
+  public static final long bitMaskX = (long)(0b0000000000000000000000000000000000000000000000000011111111110000L);
+
+  public static final long bitMaskY = (long)(0b0000000000000000000000000000000000000000111111111100000000000000L);
+
+  public static final long bitMaskP1 = (long)(0b0000000000000000000000000000001111111111000000000000000000000000L);
+
+  public static final long bitMaskP2 = (long)(0b0000000000000000000011111111110000000000000000000000000000000000L);
+
+  public static final long bitMaskP3 = (long)(0b0000000000111111111100000000000000000000000000000000000000000000L);
+
+  public static final long bitMaskP4 = (long)(0b1111111111000000000000000000000000000000000000000000000000000000L);
+
+  public static byte type(long displaycmd) {
+    return (byte)((displaycmd >>> 0) & 0b0000000000000000000000000000000000000000000000000000000000001111L);
+  }
+
+  public static long type(long displaycmd, byte value) {
+    return (long)((displaycmd & (~0b0000000000000000000000000000000000000000000000000000000000001111L)) | ((long)value << 0L));
+  }
+
+  public static int x(long displaycmd) {
+    return (int)((displaycmd >>> 4) & 0b0000000000000000000000000000000000000000000000000000001111111111L);
+  }
+
+  public static long x(long displaycmd, int value) {
+    return (long)((displaycmd & (~0b0000000000000000000000000000000000000000000000000011111111110000L)) | ((long)value << 4L));
+  }
+
+  public static int y(long displaycmd) {
+    return (int)((displaycmd >>> 14) & 0b0000000000000000000000000000000000000000000000000000001111111111L);
+  }
+
+  public static long y(long displaycmd, int value) {
+    return (long)((displaycmd & (~0b0000000000000000000000000000000000000000111111111100000000000000L)) | ((long)value << 14L));
+  }
+
+  public static int p1(long displaycmd) {
+    return (int)((displaycmd >>> 24) & 0b0000000000000000000000000000000000000000000000000000001111111111L);
+  }
+
+  public static long p1(long displaycmd, int value) {
+    return (long)((displaycmd & (~0b0000000000000000000000000000001111111111000000000000000000000000L)) | ((long)value << 24L));
+  }
+
+  public static int p2(long displaycmd) {
+    return (int)((displaycmd >>> 34) & 0b0000000000000000000000000000000000000000000000000000001111111111L);
+  }
+
+  public static long p2(long displaycmd, int value) {
+    return (long)((displaycmd & (~0b0000000000000000000011111111110000000000000000000000000000000000L)) | ((long)value << 34L));
+  }
+
+  public static int p3(long displaycmd) {
+    return (int)((displaycmd >>> 44) & 0b0000000000000000000000000000000000000000000000000000001111111111L);
+  }
+
+  public static long p3(long displaycmd, int value) {
+    return (long)((displaycmd & (~0b0000000000111111111100000000000000000000000000000000000000000000L)) | ((long)value << 44L));
+  }
+
+  public static int p4(long displaycmd) {
+    return (int)((displaycmd >>> 54) & 0b0000000000000000000000000000000000000000000000000000001111111111L);
+  }
+
+  public static long p4(long displaycmd, int value) {
+    return (long)((displaycmd & (~0b1111111111000000000000000000000000000000000000000000000000000000L)) | ((long)value << 54L));
+  }
+
+  public static long get(byte type, int x, int y, int p1, int p2, int p3, int p4) {
+    return (long)((((long)type << 0L) & 0b0000000000000000000000000000000000000000000000000000000000001111L) | (((long)x << 4L) & 0b0000000000000000000000000000000000000000000000000011111111110000L) | (((long)y << 14L) & 0b0000000000000000000000000000000000000000111111111100000000000000L) | (((long)p1 << 24L) & 0b0000000000000000000000000000001111111111000000000000000000000000L) | (((long)p2 << 34L) & 0b0000000000000000000011111111110000000000000000000000000000000000L) | (((long)p3 << 44L) & 0b0000000000111111111100000000000000000000000000000000000000000000L) | (((long)p4 << 54L) & 0b1111111111000000000000000000000000000000000000000000000000000000L));
+  }
+}

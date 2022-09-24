@@ -1,44 +1,94 @@
 package mindustry.ui.dialogs;
 
-import arc.*;
-import arc.assets.loaders.TextureLoader.*;
-import arc.func.*;
-import arc.graphics.*;
-import arc.graphics.Texture.*;
-import arc.graphics.g2d.*;
-import arc.graphics.gl.*;
-import arc.input.*;
-import arc.math.*;
-import arc.math.geom.*;
-import arc.scene.*;
-import arc.scene.event.*;
-import arc.scene.style.*;
-import arc.scene.ui.*;
-import arc.scene.ui.layout.*;
-import arc.struct.*;
-import arc.util.*;
-import mindustry.*;
-import mindustry.content.*;
-import mindustry.content.TechTree.*;
-import mindustry.core.*;
-import mindustry.ctype.*;
-import mindustry.game.Objectives.*;
-import mindustry.game.SectorInfo.*;
-import mindustry.game.*;
-import mindustry.gen.*;
-import mindustry.graphics.*;
-import mindustry.graphics.g3d.PlanetGrid.*;
-import mindustry.graphics.g3d.*;
-import mindustry.input.*;
-import mindustry.maps.*;
-import mindustry.type.*;
-import mindustry.ui.*;
-import mindustry.world.blocks.storage.*;
+import static arc.Core.app;
+import static arc.Core.assets;
+import static arc.Core.bundle;
+import static arc.Core.graphics;
+import static arc.Core.input;
+import static arc.Core.scene;
+import static arc.Core.settings;
+import static mindustry.Vars.content;
+import static mindustry.Vars.control;
+import static mindustry.Vars.coreLandDuration;
+import static mindustry.Vars.defaultContentIcons;
+import static mindustry.Vars.iconMed;
+import static mindustry.Vars.iconSmall;
+import static mindustry.Vars.mobile;
+import static mindustry.Vars.net;
+import static mindustry.Vars.player;
+import static mindustry.Vars.renderer;
+import static mindustry.Vars.ui;
+import static mindustry.Vars.universe;
+import static mindustry.graphics.g3d.PlanetRenderer.borderColor;
+import static mindustry.graphics.g3d.PlanetRenderer.camLength;
+import static mindustry.graphics.g3d.PlanetRenderer.hoverColor;
+import static mindustry.graphics.g3d.PlanetRenderer.shadowColor;
+import static mindustry.ui.dialogs.PlanetDialog.Mode.look;
+import static mindustry.ui.dialogs.PlanetDialog.Mode.planetLaunch;
+import static mindustry.ui.dialogs.PlanetDialog.Mode.select;
 
-import static arc.Core.*;
-import static mindustry.Vars.*;
-import static mindustry.graphics.g3d.PlanetRenderer.*;
-import static mindustry.ui.dialogs.PlanetDialog.Mode.*;
+import arc.Core;
+import arc.assets.loaders.TextureLoader.TextureParameter;
+import arc.func.Cons;
+import arc.graphics.Color;
+import arc.graphics.Gl;
+import arc.graphics.Texture;
+import arc.graphics.Texture.TextureFilter;
+import arc.graphics.g2d.Draw;
+import arc.graphics.g2d.TextureRegion;
+import arc.graphics.gl.FrameBuffer;
+import arc.input.KeyCode;
+import arc.math.Mathf;
+import arc.math.geom.Vec3;
+import arc.scene.Element;
+import arc.scene.event.ElementGestureListener;
+import arc.scene.event.InputEvent;
+import arc.scene.event.InputListener;
+import arc.scene.event.Touchable;
+import arc.scene.style.TextureRegionDrawable;
+import arc.scene.ui.ButtonGroup;
+import arc.scene.ui.Dialog;
+import arc.scene.ui.Image;
+import arc.scene.ui.Label;
+import arc.scene.ui.ScrollPane;
+import arc.scene.ui.layout.Scl;
+import arc.scene.ui.layout.Table;
+import arc.struct.ObjectMap;
+import arc.struct.Seq;
+import arc.util.Align;
+import arc.util.Nullable;
+import arc.util.Scaling;
+import arc.util.Structs;
+import arc.util.Time;
+import arc.util.Tmp;
+import mindustry.Vars;
+import mindustry.content.Planets;
+import mindustry.content.TechTree.TechNode;
+import mindustry.core.UI;
+import mindustry.ctype.ContentType;
+import mindustry.ctype.UnlockableContent;
+import mindustry.game.Objectives.Objective;
+import mindustry.game.SectorInfo.ExportStat;
+import mindustry.game.Team;
+import mindustry.gen.Icon;
+import mindustry.gen.Iconc;
+import mindustry.gen.Tex;
+import mindustry.graphics.Pal;
+import mindustry.graphics.g3d.PlanetGrid.Ptile;
+import mindustry.graphics.g3d.PlanetParams;
+import mindustry.graphics.g3d.PlanetRenderer;
+import mindustry.graphics.g3d.PlanetRenderer.PlanetInterfaceRenderer;
+import mindustry.input.Binding;
+import mindustry.maps.SectorDamage;
+import mindustry.type.Item;
+import mindustry.type.ItemSeq;
+import mindustry.type.ItemStack;
+import mindustry.type.Planet;
+import mindustry.type.Sector;
+import mindustry.type.SectorPreset;
+import mindustry.ui.Fonts;
+import mindustry.ui.Styles;
+import mindustry.world.blocks.storage.CoreBlock;
 
 public class PlanetDialog extends BaseDialog implements PlanetInterfaceRenderer{
     static final String[] defaultIcons = {
@@ -1010,7 +1060,7 @@ public class PlanetDialog extends BaseDialog implements PlanetInterfaceRenderer{
         float x = stable.getX(Align.center), y = stable.getY(Align.center);
         stable.clear();
         stable.background(Styles.black6);
-
+        mindustry.neoe.Neoe.logSelected(sector);
         stable.table(title -> {
             title.add("[accent]" + sector.name()).padLeft(3);
             if(sector.preset == null){
@@ -1154,7 +1204,8 @@ public class PlanetDialog extends BaseDialog implements PlanetInterfaceRenderer{
         stable.act(0f);
     }
 
-    void playSelected(){
+   
+	void playSelected(){
         if(selected == null) return;
 
         Sector sector = selected;
