@@ -1,0 +1,101 @@
+{ /* neoebuild script
+
+	/opt/openlogic-openjdk-8u342-b07-linux-x64/lib/tools.jar
+					/opt/openlogic-openjdk-8u342-b07-linux-x64/jre/lib/rt.jar
+					
+				
+			
+	
+*/
+	prjs : [
+
+		[ mi_annotations annotations { srcDir : [ src/main/java ] cp : [
+					/opt/openlogic-openjdk-8u342-b07-linux-x64/lib/tools.jar
+					/opt/openlogic-openjdk-8u342-b07-linux-x64/jre/lib/rt.jar
+					/opt/github/square/javapoet/dist/javapoet.jar
+					/opt/github/Anuken/Arc/natives/build/libs/natives-1.0.jar
+					/opt/github/Anuken/Arc/extensions/build/libs/extensions-1.0.jar
+					/opt/github/Anuken/Arc/backends/build/libs/backends-1.0.jar
+					/opt/github/Anuken/Arc/arc-core/build/libs/arc-core-1.0.jar
+					/opt/github/Anuken/Arc/natives/natives-box2d-desktop/build/libs/natives-box2d-desktop-1.0.jar
+					/opt/github/Anuken/Arc/natives/natives-desktop/build/libs/natives-desktop-1.0.jar
+					/opt/github/Anuken/Arc/natives/natives-freetype-desktop/build/libs/natives-freetype-desktop-1.0.jar
+					/opt/github/Anuken/Arc/extensions/fx/build/libs/fx-1.0.jar
+					/opt/github/Anuken/Arc/extensions/box2d/build/libs/box2d-1.0.jar
+					/opt/github/Anuken/Arc/extensions/recorder/build/libs/recorder-1.0.jar
+					/opt/github/Anuken/Arc/extensions/freetype/build/libs/freetype-1.0.jar
+					/opt/github/Anuken/Arc/extensions/tiled/build/libs/tiled-1.0.jar
+					/opt/github/Anuken/Arc/extensions/packer/build/libs/packer-1.0.jar
+					/opt/github/Anuken/Arc/extensions/flabel/build/libs/flabel-1.0.jar
+					/opt/github/Anuken/Arc/extensions/profiling/build/libs/profiling-1.0.jar
+					/opt/github/Anuken/Arc/extensions/g3d/build/libs/g3d-1.0.jar
+					/opt/github/Anuken/Arc/extensions/arcnet/build/libs/arcnet-1.0.jar
+					/opt/github/Anuken/Arc/extensions/discord/build/libs/discord-1.0.jar
+					/opt/github/Anuken/Arc/backends/backend-sdl/build/libs/backend-sdl-1.0.jar
+				]
+			} ]
+
+		[ mi_core core { srcDir : [ src build/generated/source/kapt/main assets ]
+				dep : [ mi_annotations ]
+				cp : [
+					/home/neoe/.gradle/caches/modules-2/files-2.1/com.github.Anuken/rhino/73a812444ac388ac2d94013b5cadc8f70b7ea027/a4d5adce051abf063ad1a6aab0259b5bca1c1817/rhino-73a812444ac388ac2d94013b5cadc8f70b7ea027.jar
+					/home/neoe/.gradle/caches/modules-2/files-2.1/org.lz4/lz4-java/1.8.0/4b986a99445e49ea5fbf5d149c4b63f6ed6c6780/lz4-java-1.8.0.jar
+					/opt/github/Anuken/Arc/natives/build/libs/natives-1.0.jar
+					/opt/github/Anuken/Arc/extensions/build/libs/extensions-1.0.jar
+					/opt/github/Anuken/Arc/backends/build/libs/backends-1.0.jar
+					/opt/github/Anuken/Arc/arc-core/build/libs/arc-core-1.0.jar
+					/opt/github/Anuken/Arc/natives/natives-box2d-desktop/build/libs/natives-box2d-desktop-1.0.jar
+					/opt/github/Anuken/Arc/natives/natives-desktop/build/libs/natives-desktop-1.0.jar
+					/opt/github/Anuken/Arc/natives/natives-freetype-desktop/build/libs/natives-freetype-desktop-1.0.jar
+					/opt/github/Anuken/Arc/extensions/fx/build/libs/fx-1.0.jar
+					/opt/github/Anuken/Arc/extensions/box2d/build/libs/box2d-1.0.jar
+					/opt/github/Anuken/Arc/extensions/recorder/build/libs/recorder-1.0.jar
+					/opt/github/Anuken/Arc/extensions/freetype/build/libs/freetype-1.0.jar
+					/opt/github/Anuken/Arc/extensions/tiled/build/libs/tiled-1.0.jar
+					/opt/github/Anuken/Arc/extensions/packer/build/libs/packer-1.0.jar
+					/opt/github/Anuken/Arc/extensions/flabel/build/libs/flabel-1.0.jar
+					/opt/github/Anuken/Arc/extensions/profiling/build/libs/profiling-1.0.jar
+					/opt/github/Anuken/Arc/extensions/g3d/build/libs/g3d-1.0.jar
+					/opt/github/Anuken/Arc/extensions/arcnet/build/libs/arcnet-1.0.jar
+					/opt/github/Anuken/Arc/extensions/discord/build/libs/discord-1.0.jar
+					/opt/github/Anuken/Arc/backends/backend-sdl/build/libs/backend-sdl-1.0.jar
+				] } ]
+
+		[ mi_desktop desktop { dep : [ mi_core ]
+				cp : [
+					/home/neoe/.gradle/caches/modules-2/files-2.1/com.github.Anuken/steamworks4j/0b86023401880bb5e586bc404bedbaae9b1f1c94/f51bae6685aefd04043046251528bfb4a7547b08/steamworks4j-0b86023401880bb5e586bc404bedbaae9b1f1c94.jar
+					/opt/github/square/javapoet/dist/javapoet.jar
+					/opt/github/Anuken/Arc/natives/build/libs/natives-1.0.jar
+					/opt/github/Anuken/Arc/extensions/build/libs/extensions-1.0.jar
+					/opt/github/Anuken/Arc/backends/build/libs/backends-1.0.jar
+					/opt/github/Anuken/Arc/arc-core/build/libs/arc-core-1.0.jar
+					/opt/github/Anuken/Arc/natives/natives-box2d-desktop/build/libs/natives-box2d-desktop-1.0.jar
+					/opt/github/Anuken/Arc/natives/natives-desktop/build/libs/natives-desktop-1.0.jar
+					/opt/github/Anuken/Arc/natives/natives-freetype-desktop/build/libs/natives-freetype-desktop-1.0.jar
+					/opt/github/Anuken/Arc/extensions/fx/build/libs/fx-1.0.jar
+					/opt/github/Anuken/Arc/extensions/box2d/build/libs/box2d-1.0.jar
+					/opt/github/Anuken/Arc/extensions/recorder/build/libs/recorder-1.0.jar
+					/opt/github/Anuken/Arc/extensions/freetype/build/libs/freetype-1.0.jar
+					/opt/github/Anuken/Arc/extensions/tiled/build/libs/tiled-1.0.jar
+					/opt/github/Anuken/Arc/extensions/packer/build/libs/packer-1.0.jar
+					/opt/github/Anuken/Arc/extensions/flabel/build/libs/flabel-1.0.jar
+					/opt/github/Anuken/Arc/extensions/profiling/build/libs/profiling-1.0.jar
+					/opt/github/Anuken/Arc/extensions/g3d/build/libs/g3d-1.0.jar
+					/opt/github/Anuken/Arc/extensions/arcnet/build/libs/arcnet-1.0.jar
+					/opt/github/Anuken/Arc/extensions/discord/build/libs/discord-1.0.jar
+					/opt/github/Anuken/Arc/backends/backend-sdl/build/libs/backend-sdl-1.0.jar
+				] } ]
+	]
+	javac_optXXX : [ --add-opens=jdk.compiler/com.sun.tools.javac.api=ALL-UNNAMED
+		--add-opens=jdk.compiler/com.sun.tools.javac.code=ALL-UNNAMED
+		--add-opens=jdk.compiler/com.sun.tools.javac.model=ALL-UNNAMED
+		--add-opens=jdk.compiler/com.sun.tools.javac.processing=ALL-UNNAMED
+		--add-opens=jdk.compiler/com.sun.tools.javac.parser=ALL-UNNAMED
+		--add-opens=jdk.compiler/com.sun.tools.javac.util=ALL-UNNAMED
+		--add-opens=jdk.compiler/com.sun.tools.javac.tree=ALL-UNNAMED
+		--add-opens=java.base/sun.reflect.annotation=ALL-UNNAMED ]
+	/*	javac : /opt/openlogic-openjdk-8u342-b07-linux-x64/bin/javac
+	target:8 */
+
+}
+
