@@ -20,7 +20,7 @@ public class Neoe {
 	private static Map conf;
 
 	public synchronized static Map getConf() {
-		if (conf != null)
+		if (conf != null) 
 			return conf;
 		try {
 			conf = (Map) PyData.parseAll(FileUtil.readString(Neoe.class.getResourceAsStream("neoe.conf"), null));

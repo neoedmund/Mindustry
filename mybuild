@@ -3,7 +3,16 @@
 	/opt/openlogic-openjdk-8u342-b07-linux-x64/lib/tools.jar
 	/opt/openlogic-openjdk-8u342-b07-linux-x64/jre/lib/rt.jar
 
-
+	javac_optXXX : [ --add-opens=jdk.compiler/com.sun.tools.javac.api=ALL-UNNAMED
+		--add-opens=jdk.compiler/com.sun.tools.javac.code=ALL-UNNAMED
+		--add-opens=jdk.compiler/com.sun.tools.javac.model=ALL-UNNAMED
+		--add-opens=jdk.compiler/com.sun.tools.javac.processing=ALL-UNNAMED
+		--add-opens=jdk.compiler/com.sun.tools.javac.parser=ALL-UNNAMED
+		--add-opens=jdk.compiler/com.sun.tools.javac.util=ALL-UNNAMED
+		--add-opens=jdk.compiler/com.sun.tools.javac.tree=ALL-UNNAMED
+		--add-opens=java.base/sun.reflect.annotation=ALL-UNNAMED ]
+ 	javac : /opt/openlogic-openjdk-8u342-b07-linux-x64/bin/javac
+	target:8  
 
 	annotations/dist/mi_annotations.jar
 */
@@ -34,9 +43,24 @@
 					/opt/github/Anuken/Arc/extensions/discord/build/libs/discord-1.0.jar
 					/opt/github/Anuken/Arc/backends/backend-sdl/build/libs/backend-sdl-1.0.jar
 				] } ]
-		[ mi_neoe core {
+		[ mi_neoe core/neoe {
 				dep : [ neoeutils mi_core ]
-				srcDir : [ neoe ]
+				cp:[
+					/opt/github/Anuken/Arc/extensions/build/libs/extensions-1.0.jar
+					/opt/github/Anuken/Arc/backends/build/libs/backends-1.0.jar
+					/opt/github/Anuken/Arc/arc-core/build/libs/arc-core-1.0.jar
+					/opt/github/Anuken/Arc/extensions/fx/build/libs/fx-1.0.jar
+					/opt/github/Anuken/Arc/extensions/box2d/build/libs/box2d-1.0.jar
+					/opt/github/Anuken/Arc/extensions/recorder/build/libs/recorder-1.0.jar
+					/opt/github/Anuken/Arc/extensions/freetype/build/libs/freetype-1.0.jar
+					/opt/github/Anuken/Arc/extensions/tiled/build/libs/tiled-1.0.jar
+					/opt/github/Anuken/Arc/extensions/packer/build/libs/packer-1.0.jar
+					/opt/github/Anuken/Arc/extensions/flabel/build/libs/flabel-1.0.jar
+					/opt/github/Anuken/Arc/extensions/profiling/build/libs/profiling-1.0.jar
+					/opt/github/Anuken/Arc/extensions/g3d/build/libs/g3d-1.0.jar
+					/opt/github/Anuken/Arc/extensions/arcnet/build/libs/arcnet-1.0.jar
+					/opt/github/Anuken/Arc/extensions/discord/build/libs/discord-1.0.jar
+				]
 			} ]
 		[ mi_desktop desktop { dep : [ mi_core ]
 				cp : [
@@ -63,16 +87,7 @@
 					/opt/github/Anuken/Arc/backends/backend-sdl/build/libs/backend-sdl-1.0.jar
 				] } ]
 	]
-	javac_optXXX : [ --add-opens=jdk.compiler/com.sun.tools.javac.api=ALL-UNNAMED
-		--add-opens=jdk.compiler/com.sun.tools.javac.code=ALL-UNNAMED
-		--add-opens=jdk.compiler/com.sun.tools.javac.model=ALL-UNNAMED
-		--add-opens=jdk.compiler/com.sun.tools.javac.processing=ALL-UNNAMED
-		--add-opens=jdk.compiler/com.sun.tools.javac.parser=ALL-UNNAMED
-		--add-opens=jdk.compiler/com.sun.tools.javac.util=ALL-UNNAMED
-		--add-opens=jdk.compiler/com.sun.tools.javac.tree=ALL-UNNAMED
-		--add-opens=java.base/sun.reflect.annotation=ALL-UNNAMED ]
-	/*	javac : /opt/openlogic-openjdk-8u342-b07-linux-x64/bin/javac
-	target:8 */
+
 
 }
 

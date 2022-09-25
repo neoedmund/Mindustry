@@ -129,10 +129,11 @@ public class PlanetDialog extends BaseDialog implements PlanetInterfaceRenderer 
 	public PlanetDialog() {
 		super("", Styles.fullDialog);
 		try {
-			Class neoeclass = Class.forName("neoe.Mindustry.Neoe");
+			Class neoeclass = this.getClass().getClassLoader().loadClass("neoe.mindustry.Neoe");
 			neoeMethod1 = neoeclass.getMethod("anaSector", new Class[] { Sector.class });
 		} catch (Exception e) {
 			System.out.println("cannot find neoe.Mindustry.Neoe.anaSector(Sector):" + e);
+			e.printStackTrace();
 		}
 		state.renderer = this;
 		state.drawUi = true;

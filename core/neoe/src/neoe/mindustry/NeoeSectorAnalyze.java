@@ -255,7 +255,7 @@ public class NeoeSectorAnalyze {
 				break;
 		}
 		if (!added.isEmpty()) {
-			print("\nSum Produced:" + added);
+			print("\n--- Sum Produced:" + added);
 		}
 		Set<Item> todo = new HashSet<>(availRes);
 		ArrayList<Item> p =new ArrayList();
@@ -267,12 +267,12 @@ public class NeoeSectorAnalyze {
 		print("\n Producing:" + p);
 		todo.removeAll(p);
 		if (!todo.isEmpty()) {
-			print("\nTodo Produce:" + todo);
+			print("\n---Todo Produce:" + todo);
 		}
 	}
 
 	private void printAvailTurret() {
-		print("\n Turret:");
+		print("\n---Turrets:");
 		for (Block b : getAllBlocks()) { // eg. scatter , arc
 			if (b == null)
 				continue;
@@ -296,7 +296,7 @@ public class NeoeSectorAnalyze {
 	}
 
 	private void printFactory(UnitFactory b1) {
-		print("\n    by Fac: %s%s 建造材料: %s", b1.localizedName, unlocked(b1), Arrays.deepToString(b1.requirements));
+		print("\n    by Factory: %s%s 建造材料: %s", b1.localizedName, unlocked(b1), Arrays.deepToString(b1.requirements));
 
 	}
 
