@@ -14,4 +14,8 @@ changes:
 
 1. [QoL] : when select a section, print brief analyzed info into logfile.
    info: resources, produtions, todo productions, possible factory army turrets.
+   
+2. [code] : drop gradle, use neoebuild. 
+   It seems uses annotation for code gen, but further use  `com.sun.tools.javac.*` and `sun.reflect.annotation.*`(bad), so not clean for plain build.
+
 
