@@ -44,7 +44,7 @@
 					/opt/github/Anuken/Arc/backends/backend-sdl/build/libs/backend-sdl-1.0.jar
 				] } ]
 		[ mi_neoe core/neoe {
-				dep : [ neoeutils mi_core ]
+				dep : [ neoeutils mi_core textfrog ]
 				cp:[
 					/opt/github/Anuken/Arc/extensions/build/libs/extensions-1.0.jar
 					/opt/github/Anuken/Arc/backends/build/libs/backends-1.0.jar

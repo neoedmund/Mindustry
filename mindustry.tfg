@@ -1,0 +1,290 @@
+# embbeded
+runnable main {
+	logname ( "/tmp" "mi-tfg" )
+}
+function initAllBlocks {
+	bs = JavaClass ( "mindustry.content.Blocks" )
+	b = JavaClass ( "mindustry.world.Block" )
+	ret = [ ]
+	for bs . getFields ( ) f i {
+		-- log ( "[%d]=%s %s" i f . getName ( )   f . getType ( ))
+		if b . isAssignableFrom ( f . getType ( ) )
+			v = f . get ( null )
+			if v != null ret . add ( v ) end
+		end
+	}
+	log ( "init all blocks cnt %,d %s" ret . size ( ) "" + ret )
+	return ret
+}
+private inst ( obj type ) {
+	return type . isAssignableFrom ( obj . getClass ( ) )
+}
+private init {
+	if G . allBlocks == null || G . allBlocks . isEmpty ( )
+		G . allBlocks = initAllBlocks ( )
+	end
+	if G . cs == null
+		cs = { }
+		for [ ConsumeItems ConsumePower ConsumeLiquid ConsumeItemFlammable ConsumeItemExplode ConsumeItemFilter ] name {
+			cs [ name ] = JavaClass ( 'mindustry.world.consumers.' + name )
+		}
+		G . cs = cs
+	end
+}
+function anaSector ( sector ) {
+	sb = [ ]
+	threadlocal ( ) . sb = sb
+	threadlocal ( ) . sector = sector
+
+	sb . add ( format ( "-----\n section [%s] " sector . name ( ) ) )
+	init ( )
+	--- resource
+	sb . add ( "\n 资源 [ " )
+	Item = JavaClass ( "mindustry.type.Item" )
+	ava = [ ]
+	threadlocal ( ) . ava = ava
+	for sector . info . resources uc {
+		sb . add ( uc . localizedName )
+		if inst ( uc Item )
+			ava . add ( uc )
+			sb . add ( "+" )
+		end
+		sb . add ( " " )
+	}
+	sb . add ( " ]" )
+	checkProduct ( sb )
+	checkPower ( sb )
+	checkArmy ( sb )
+	checkTurret ( sb )
+	--- output
+	log ( sb . join ( "" ) )
+	threadlocal ( ) . clear ( )
+}
+
+private checkTurret ( sb ) {
+	sb . add ( "\n--- 炮塔" )
+	ItemTurret = JavaClass ( 'mindustry.world.blocks.defense.turrets.ItemTurret' )
+	PowerTurret = JavaClass ( 'mindustry.world.blocks.defense.turrets.PowerTurret' )
+	t1 = [ ]
+	t2 = [ ]
+	ava = threadlocal ( ) . ava
+	for G . allBlocks b {
+		if inst ( b ItemTurret )
+			for b . ammoTypes . keys ( ) x {
+				if ava . contains ( x )
+					t1 . add ( b )
+					break
+				end
+			}
+		elseif inst ( b PowerTurret )
+			t2 . add ( b )
+		end
+	}
+	sb . add ( "\n  --- 子弹炮 " )
+	for t1 b {
+		sb . add ( format ( "\n [%s] 用料: %s ammo: %s "
+				lockName ( b ) itemStackArrStr ( b . requirements )
+				itemListStr ( b . ammoTypes . keys ( ) . toSeq ( ) ) ) )
+	}
+	sb . add ( "\n  --- 电炮 " )
+	for t2 b {
+		sb . add ( format ( "\n [%s] 用料: %s "
+				lockName ( b ) itemStackArrStr ( b . requirements ) ) )
+	}
+}
+private itemStackArrStr ( its ) {
+	sb = [ ]
+	for ( its s i ) {
+		if i > 0 sb . add ( ' + ' ) end
+		sb . add ( itemStackStr ( s ) )
+	}
+	return " [ " + sb . join ( "" ) + " ] "
+}
+private itemListStr ( seq ) {
+	sb = [ ]
+	for ( seq item i ) {
+		if i > 0 sb . add ( ' ' ) end
+		sb . add ( itemStr ( item ) )
+	}
+	return " [ " + sb . join ( "" ) + " ] "
+}
+private checkArmy ( sb ) {
+	sb . add ( "\n--- 军工厂" )
+	UnitFactory = JavaClass ( 'mindustry.world.blocks.units.UnitFactory' )
+	for G . allBlocks b {
+		if inst ( b UnitFactory )
+			ok = false
+			for b . plans x {
+				if meetItems ( x . requirements )
+					sb . add ( format ( "\n  [%s] 用料:%s "
+							lockName ( x . unit ) itemStackArrStr ( x . requirements ) ) )
+					ok = true
+				end
+			}
+			if ok
+				sb . add ( format ( "\n    from: %s 用料: %s"
+						lockName ( b ) itemStackArrStr ( b . requirements ) ) )
+			end
+		end
+	}
+}
+private checkPower ( sb ) {
+	PowerGenerator = JavaClass ( 'mindustry.world.blocks.power.PowerGenerator' )
+	hasPower = false
+	for G . allBlocks b {
+		if inst ( b PowerGenerator )
+			if meetAnyCons ( b . consumers )
+				sb . add ( format ( "\n 供电: %s 用料: %s \n  in:%s "
+						lockName ( b ) itemStackArrStr ( b . requirements ) consStr ( b . consumers ) ) )
+				hasPower = true
+			end
+		end
+	}
+	threadlocal ( ) . hasPower = hasPower
+}
+private lockName ( b ) {
+	if b . unlocked ( )
+		return b . localizedName
+	else
+		return b . localizedName + "?"
+	end
+}
+private checkProduct ( sb ) {
+	ava = threadlocal ( ) . ava
+	added = set ( [ ] )
+	done = set ( [ ] )
+	GenericCrafter = JavaClass ( "mindustry.world.blocks.production.GenericCrafter" )
+	sb . add ( "\n--- 制造厂" )
+	for {
+		more = 0
+		for G . allBlocks b {
+			if done . contains ( b ) continue end
+			if ! inst ( b GenericCrafter )
+				done . add ( b ) continue
+			end
+			if meetAnyCons ( b . consumers )
+				done . add ( b )
+				sb . add ( format ( " [%s]  建材: %s \n   input: %s"
+						lockName ( b ) itemStackArrStr ( b . requirements ) consStr ( b . consumers ) ) )
+				if b . outputItem != null
+					out = b . outputItem . item
+					sb . add ( "\n   -> " + out )
+					if ! ava . contains ( out )
+						if out . unlocked ( )
+							ava . add ( out )
+							added . add ( out )
+							more = more + 1
+						end
+					end
+				end
+			end
+		}
+		if more == 0 break end
+	}
+	if ! added . isEmpty ( )
+		sb . add ( "\n--- 可生产:" + added )
+	end
+	todo = set ( ava )
+	p = [ ]
+	sector = threadlocal ( ) . sector
+	for sector . info . production x {
+		if ( x . value . mean > 0 )
+			p . add ( x . key )
+		end
+	}
+	sb . add ( "\n 已生产:" + p )
+	todo . removeAll ( p )
+	sb . add ( "\n 待生产:" + todo )
+}
+private consStr ( cons ) {
+	ava = threadlocal ( ) . ava
+	sb = [ ]
+	sb . add ( "[ " )
+	cs = G . cs
+	for cons c {
+		if inst ( c cs . ConsumeItems )
+			sb . add ( " [ " )
+			for c . items it i {
+				if i > 0 sb . add ( " + " ) end
+				sb . add ( itemStackStr ( it ) )
+			}
+			sb . add ( " ] " )
+		elseif inst ( c cs . ConsumePower )
+			sb . add ( ' 电 x ' + c . usage )
+		elseif inst ( c cs . ConsumeLiquid )
+			sb . add ( ' 液体 x ' + c . amount )
+		elseif inst ( c cs . ConsumeItemFlammable )
+			sb . add ( ' 燃烧物 x ' + c . minFlammability + meetStr ( c ) )
+		elseif inst ( c cs . ConsumeItemExplode )
+			sb . add ( ' 爆炸物 >= ' + c . threshold + meetStr ( c ) )
+		else
+			sb . add ( ' ' + c . getClass ( ) . getSimpleName ( ) )
+		end
+	}
+	return sb . join ( '' )
+}
+private meetStr ( c ) {
+	ava = threadlocal ( ) . ava
+	return " ( " +
+	ava . filter ( -> x { return c . filter . get ( x ) } ) . join ( " " )
+	+ " ) "
+}
+private itemStackStr ( it ) {
+	ava = threadlocal ( ) . ava
+	return itemStr ( it . item ) + " x " + it . amount
+}
+private itemStr ( i ) {
+	ava = threadlocal ( ) . ava
+	if ( ava . contains ( i ) )
+		return i . localizedName
+	else
+		return "-" + i . localizedName
+	end
+}
+private meetAnyCons ( cons ) {
+	ava = threadlocal ( ) . ava
+	needpower = false
+	for cons c {
+		if inst ( c G . cs . ConsumePower )
+			needpower = true
+		end
+	}
+	for cons c {
+		if inst ( c G . cs . ConsumeItemFilter )
+			if ava . anyMatch ( -> x { return c . filter . get ( x ) } )
+				printPower2 ( needpower )
+				return true
+			end
+		elseif inst ( c G . cs . ConsumeItems )
+			if ( meetItems ( c . items ) )
+				printPower2 ( needpower )
+				return true
+			end
+		else
+			// ignore?
+		end
+	}
+	return false
+}
+private meetItems ( its ) {
+	ava = threadlocal ( ) . ava
+	for its it {
+		if ! ava . contains ( it . item )
+			return false
+		end
+	}
+	return true
+}
+private printPower2 ( needpower ) {
+	sb = threadlocal ( ) . sb
+	hasPower = threadlocal ( ) . hasPower == true
+	if ( needpower )
+		if ( ! hasPower )
+			sb . add ( "\n (*要电)" )
+		else
+			sb . add ( "\n (要电)" )
+		end
+	else
+		sb . add ( "\n" )
+	end
+}
