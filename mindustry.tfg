@@ -36,7 +36,7 @@ function anaSector ( sector ) {
 	threadlocal ( ) . sb = sb
 	threadlocal ( ) . sector = sector
 
-	sb . add ( format ( "-----\n section [%s] " sector . name ( ) ) )
+	sb . add ( format ( "======\n section [%s] " sector . name ( ) ) )
 	init ( )
 	--- resource
 	sb . add ( "\n 资源 [ " )
@@ -149,11 +149,12 @@ private lockName ( b ) {
 		return b . localizedName + "?"
 	end
 }
-private checkProduct ( sb ) {
+private checkProduct ( sb0 ) {
 	ava = threadlocal ( ) . ava
 	added = set ( [ ] )
 	done = set ( [ ] )
 	GenericCrafter = JavaClass ( "mindustry.world.blocks.production.GenericCrafter" )
+	sb = [ ]
 	sb . add ( "\n--- 制造厂" )
 	for {
 		more = 0
@@ -164,7 +165,7 @@ private checkProduct ( sb ) {
 			end
 			if meetAnyCons ( b . consumers )
 				done . add ( b )
-				sb . add ( format ( " [%s]  建材: %s \n   input: %s"
+				sb . add ( format ( "\n <%s>  建材: %s \n   input: %s"
 						lockName ( b ) itemStackArrStr ( b . requirements ) consStr ( b . consumers ) ) )
 				if b . outputItem != null
 					out = b . outputItem . item
@@ -182,7 +183,7 @@ private checkProduct ( sb ) {
 		if more == 0 break end
 	}
 	if ! added . isEmpty ( )
-		sb . add ( "\n--- 可生产:" + added )
+		sb0 . add ( "\n--- 可生产:" + added )
 	end
 	todo = set ( ava )
 	p = [ ]
@@ -192,9 +193,10 @@ private checkProduct ( sb ) {
 			p . add ( x . key )
 		end
 	}
-	sb . add ( "\n 已生产:" + p )
+	sb0 . add ( "\n 已生产:" + p )
 	todo . removeAll ( p )
-	sb . add ( "\n 待生产:" + todo )
+	sb0 . add ( "\n 待生产:" + todo )
+	sb0 . add ( sb . join ( '' ) )
 }
 private consStr ( cons ) {
 	ava = threadlocal ( ) . ava
@@ -252,12 +254,12 @@ private meetAnyCons ( cons ) {
 	for cons c {
 		if inst ( c G . cs . ConsumeItemFilter )
 			if ava . anyMatch ( -> x { return c . filter . get ( x ) } )
-				printPower2 ( needpower )
+				-- printPower2 ( needpower )
 				return true
 			end
 		elseif inst ( c G . cs . ConsumeItems )
 			if ( meetItems ( c . items ) )
-				printPower2 ( needpower )
+				-- printPower2 ( needpower )
 				return true
 			end
 		else
@@ -276,6 +278,7 @@ private meetItems ( its ) {
 	return true
 }
 private printPower2 ( needpower ) {
+	if true return 0 end
 	sb = threadlocal ( ) . sb
 	hasPower = threadlocal ( ) . hasPower == true
 	if ( needpower )
