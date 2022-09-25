@@ -1695,6 +1695,11 @@ final class NullUnit extends Unit implements Unitc {
 
   @Override
   @Annotations.OverrideCallSuper
+  public final void updateBoosting(boolean arg0) {
+  }
+
+  @Override
+  @Annotations.OverrideCallSuper
   public final void updateBuildLogic() {
   }
 

@@ -294,8 +294,9 @@ public class LaunchCore implements Drawc, Entityc, LaunchCorec, Posc, Timedc {
         Draw.color();
         Draw.z(Layer.weather - 1);
         TextureRegion region = block.fullIcon;
-        float rw = region.width * Draw.scl * scale;
-        float rh = region.height * Draw.scl * scale;
+        scale *= region.scl();
+        float rw = region.width * scale;
+        float rh = region.height * scale;
         Draw.alpha(alpha);
         Draw.rect(region, cx, cy, rw, rh, rotation - 45);
         Tmp.v1.trns(225.0F, fin(Interp.pow3In) * 250.0F);

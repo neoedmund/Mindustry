@@ -364,8 +364,9 @@ public class LaunchPayload implements Drawc, Entityc, LaunchPayloadc, Posc, Team
         Draw.color();
         Draw.z(Layer.weather - 1);
         TextureRegion region = blockOn() instanceof mindustry.world.blocks.campaign.LaunchPad p ? p.podRegion : Core.atlas.find("launchpod");
-        float rw = region.width * Draw.scl * scale;
-        float rh = region.height * Draw.scl * scale;
+        scale *= region.scl();
+        float rw = region.width * scale;
+        float rh = region.height * scale;
         Draw.alpha(alpha);
         Draw.rect(region, cx, cy, rw, rh, rotation);
         Tmp.v1.trns(225.0F, fin(Interp.pow3In) * 250.0F);

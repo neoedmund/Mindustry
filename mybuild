@@ -10,7 +10,6 @@
 	prjs : [
 		[ mi_assets . { srcDir : [ core/assets ] } ]
 		[ mi_core core { srcDir : [ src build/generated/source/kapt/main ]
-				dep : [ neoeutils ]
 				cp : [
 					annotations/dist/mi_annotations.jar
 					/home/neoe/.gradle/caches/modules-2/files-2.1/com.github.Anuken/rhino/73a812444ac388ac2d94013b5cadc8f70b7ea027/a4d5adce051abf063ad1a6aab0259b5bca1c1817/rhino-73a812444ac388ac2d94013b5cadc8f70b7ea027.jar
@@ -35,8 +34,11 @@
 					/opt/github/Anuken/Arc/extensions/discord/build/libs/discord-1.0.jar
 					/opt/github/Anuken/Arc/backends/backend-sdl/build/libs/backend-sdl-1.0.jar
 				] } ]
-
-		[ mi_desktop desktop { dep : [ mi_core mi_assets ]
+		[ mi_neoe core {
+				dep : [ neoeutils mi_core ]
+				srcDir : [ neoe ]
+			} ]
+		[ mi_desktop desktop { dep : [ mi_core ]
 				cp : [
 					/home/neoe/.gradle/caches/modules-2/files-2.1/com.github.Anuken/steamworks4j/0b86023401880bb5e586bc404bedbaae9b1f1c94/f51bae6685aefd04043046251528bfb4a7547b08/steamworks4j-0b86023401880bb5e586bc404bedbaae9b1f1c94.jar
 					/opt/github/square/javapoet/dist/javapoet.jar

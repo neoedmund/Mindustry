@@ -1,4 +1,4 @@
-package mindustry.neoe;
+package neoe.mindustry;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;

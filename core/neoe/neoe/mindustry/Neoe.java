@@ -1,4 +1,4 @@
-package mindustry.neoe;
+package neoe.mindustry;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -44,7 +44,7 @@ public class Neoe {
 		return mlog;
 	}
 
-	public static void logSelected(Sector sector) {
+	public static void anaSector(Sector sector) {
 		try {
 			new NeoeSectorAnalyze().run(sector);
 		} catch (Exception e) {

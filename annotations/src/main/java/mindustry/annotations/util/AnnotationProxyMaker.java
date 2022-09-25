@@ -15,7 +15,6 @@ import com.sun.tools.javac.util.List;
 import com.sun.tools.javac.util.Name;
 import com.sun.tools.javac.util.*;
 import sun.reflect.annotation.*;
-import com.sun.tools.javac.code.Scope.Entry;
 
 import javax.lang.model.element.*;
 import javax.lang.model.type.*;
@@ -47,18 +46,16 @@ public class AnnotationProxyMaker{
     }
 
     private Map<String, Object> getAllReflectedValues(){
-
         LinkedHashMap var1 = new LinkedHashMap();
         Iterator var2 = this.getAllValues().entrySet().iterator();
 
         while(var2.hasNext()){
             Entry var3 = (Entry)var2.next();
-            //MethodSymbol var4 = (MethodSymbol)var3.getKey();
-               //if (true) throw new RuntimeException("fuck you");
-           // Object var5 = this.generateValue(null, /*var4,*/ (Attribute)var3.getValue());
-           // if(var5 != null){
-             //   var1.put(var4.name.toString(), var5);
-            //}
+            MethodSymbol var4 = (MethodSymbol)var3.getKey();
+            Object var5 = this.generateValue(var4, (Attribute)var3.getValue());
+            if(var5 != null){
+                var1.put(var4.name.toString(), var5);
+            }
         }
 
         return var1;
@@ -68,7 +65,7 @@ public class AnnotationProxyMaker{
         LinkedHashMap map = new LinkedHashMap();
         ClassSymbol cl = (ClassSymbol)this.anno.type.tsym;
 
-       /* for(Symbol s : cl.members().getSymbols(LookupKind.NON_RECURSIVE)){
+        for(Symbol s : cl.members().getSymbols(LookupKind.NON_RECURSIVE)){
             if(s.getKind() == ElementKind.METHOD){
                 MethodSymbol var4 = (MethodSymbol)s;
                 Attribute var5 = var4.getDefaultValue();
@@ -77,7 +74,7 @@ public class AnnotationProxyMaker{
                 }
             }
         }
-*/
+
         for(Pair var7 : this.anno.values){
             map.put(var7.fst, var7.snd);
         }
@@ -230,3 +227,4 @@ public class AnnotationProxyMaker{
 
     }
 }
+

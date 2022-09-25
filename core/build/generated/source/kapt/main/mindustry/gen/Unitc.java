@@ -218,4 +218,6 @@ public interface Unitc extends Boundedc, Builderc, Drawc, Entityc, Flyingc, Heal
   void type(UnitType type);
 
   void update();
+
+  void updateBoosting(boolean boost);
 }

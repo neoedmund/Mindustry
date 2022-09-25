@@ -2047,6 +2047,10 @@ public class PayloadUnit extends Unit implements Boundedc, Builderc, Drawc, Enti
     }
   }
 
+  public void updateBoosting(boolean boost) {
+        elevation = Mathf.approachDelta(elevation, type.canBoost ? Mathf.num(boost || onSolid() || (isFlying() && !canLand())) : 0.0F, type.riseSpeed);
+  }
+
   public void updateBuildLogic() {
         if (type.buildSpeed <= 0.0F) return;
         if (!headless) {
