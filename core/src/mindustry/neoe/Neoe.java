@@ -1,5 +1,6 @@
 package mindustry.neoe;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -35,6 +36,11 @@ public class Neoe {
 		if (mlog != null)
 			return mlog;
 		mlog = Log.getLog("mindustry");
+		try {
+			mlog.clear();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 		return mlog;
 	}
 
