@@ -32,6 +32,8 @@ import mindustry.world.consumers.ConsumeLiquid;
 import mindustry.world.consumers.ConsumePower;
 import neoe.util.Config;
 
+/**use .tfg instead*/
+@Deprecated 
 public class NeoeSectorAnalyze {
 	static List<Block> _allBlocks;
 

@@ -63,6 +63,7 @@ import arc.util.Scaling;
 import arc.util.Structs;
 import arc.util.Time;
 import arc.util.Tmp;
+import mindustry.NeoeInject;
 import mindustry.Vars;
 import mindustry.content.Planets;
 import mindustry.content.TechTree.TechNode;
@@ -124,17 +125,10 @@ public class PlanetDialog extends BaseDialog implements PlanetInterfaceRenderer 
 
 	private Texture[] planetTextures;
 
-	private Method neoeMethod1;
 
 	public PlanetDialog() {
 		super("", Styles.fullDialog);
-		try {
-			Class neoeclass = this.getClass().getClassLoader().loadClass("neoe.mindustry.Neoe");
-			neoeMethod1 = neoeclass.getMethod("anaSector", new Class[] { Sector.class });
-		} catch (Exception e) {
-			System.out.println("cannot find neoe.Mindustry.Neoe.anaSector(Sector):" + e);
-			e.printStackTrace();
-		}
+	
 		state.renderer = this;
 		state.drawUi = true;
 
@@ -1127,14 +1121,7 @@ public class PlanetDialog extends BaseDialog implements PlanetInterfaceRenderer 
 		float x = stable.getX(Align.center), y = stable.getY(Align.center);
 		stable.clear();
 		stable.background(Styles.black6);
-		if (neoeMethod1 != null) {
-			// neoe.mindustry.Neoe.anaSector(sector);
-			try {
-				neoeMethod1.invoke(null, sector);
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		}
+		NeoeInject.call("anaSector", sector);
 		stable.table(title -> {
 			title.add("[accent]" + sector.name()).padLeft(3);
 			if (sector.preset == null) {

@@ -2,34 +2,33 @@
 runnable main {
 	logname ( "/tmp" "mi-tfg" )
 }
-function initAllBlocks {
-	bs = JavaClass ( "mindustry.content.Blocks" )
-	b = JavaClass ( "mindustry.world.Block" )
-	ret = [ ]
-	for bs . getFields ( ) f i {
-		-- log ( "[%d]=%s %s" i f . getName ( )   f . getType ( ))
-		if b . isAssignableFrom ( f . getType ( ) )
-			v = f . get ( null )
-			if v != null ret . add ( v ) end
-		end
-	}
-	log ( "init all blocks cnt %,d %s" ret . size ( ) "" + ret )
-	return ret
-}
-private inst ( obj type ) {
-	return type . isAssignableFrom ( obj . getClass ( ) )
-}
-private init {
-	if G . allBlocks == null || G . allBlocks . isEmpty ( )
-		G . allBlocks = initAllBlocks ( )
-	end
-	if G . cs == null
-		cs = { }
-		for [ ConsumeItems ConsumePower ConsumeLiquid ConsumeItemFlammable ConsumeItemExplode ConsumeItemFilter ] name {
-			cs [ name ] = JavaClass ( 'mindustry.world.consumers.' + name )
+
+function cmdline ( cmd ) {
+	cmds = parseData ( "[" + cmd + "]" )
+	switch cmds [ 0 ] {
+		'help' -> { return ( 'what can I do for you?' ) }
+		'scanmap' -> {
+			return scanmap ( )
 		}
-		G . cs = cs
+		-> { return ( 'unknown command: ' + cmds [ 0 ] ) }
+	}
+}
+function scanmap ( ) {
+	state = Vars ( 'state' )
+	map = state . map
+	tag = format ( '%s(%sx%s),  see details in logfile' map . name ( ) map . width map . height )
+	log ( "map=" + map )
+	return tag
+}
+private Vars ( name ) {
+	if G . varsClass == null
+		G . varsClass = JavaClass ( 'mindustry.Vars' )
+		G . varsField = { }
 	end
+	f = G . varsField [ name ]
+	if f == null f = ( G . varsField [ name ] = G . varsClass . getField ( name ) ) end
+	v = f . get ( null ) // maybe not final
+	return v
 }
 function anaSector ( sector ) {
 	sb = [ ]
@@ -61,6 +60,35 @@ function anaSector ( sector ) {
 	threadlocal ( ) . clear ( )
 }
 
+private initAllBlocks {
+	bs = JavaClass ( "mindustry.content.Blocks" )
+	b = JavaClass ( "mindustry.world.Block" )
+	ret = [ ]
+	for bs . getFields ( ) f i {
+		-- log ( "[%d]=%s %s" i f . getName ( )   f . getType ( ))
+		if b . isAssignableFrom ( f . getType ( ) )
+			v = f . get ( null )
+			if v != null ret . add ( v ) end
+		end
+	}
+	log ( "init all blocks cnt %,d %s" ret . size ( ) "" + ret )
+	return ret
+}
+private inst ( obj type ) {
+	return type . isAssignableFrom ( obj . getClass ( ) )
+}
+private init {
+	if G . allBlocks == null || G . allBlocks . isEmpty ( )
+		G . allBlocks = initAllBlocks ( )
+	end
+	if G . cs == null
+		cs = { }
+		for [ ConsumeItems ConsumePower ConsumeLiquid ConsumeItemFlammable ConsumeItemExplode ConsumeItemFilter ] name {
+			cs [ name ] = JavaClass ( 'mindustry.world.consumers.' + name )
+		}
+		G . cs = cs
+	end
+}
 private checkTurret ( sb ) {
 	sb . add ( "\n--- 炮塔" )
 	ItemTurret = JavaClass ( 'mindustry.world.blocks.defense.turrets.ItemTurret' )
@@ -82,13 +110,13 @@ private checkTurret ( sb ) {
 	}
 	sb . add ( "\n  --- 子弹炮 " )
 	for t1 b {
-		sb . add ( format ( "\n [%s] 用料: %s ammo: %s "
+		sb . add ( format ( "\n <%s> 用料: %s ammo: %s "
 				lockName ( b ) itemStackArrStr ( b . requirements )
 				itemListStr ( b . ammoTypes . keys ( ) . toSeq ( ) ) ) )
 	}
 	sb . add ( "\n  --- 电炮 " )
 	for t2 b {
-		sb . add ( format ( "\n [%s] 用料: %s "
+		sb . add ( format ( "\n <%s> 用料: %s "
 				lockName ( b ) itemStackArrStr ( b . requirements ) ) )
 	}
 }
@@ -116,7 +144,7 @@ private checkArmy ( sb ) {
 			ok = false
 			for b . plans x {
 				if meetItems ( x . requirements )
-					sb . add ( format ( "\n  [%s] 用料:%s "
+					sb . add ( format ( "\n  <%s> 用料:%s "
 							lockName ( x . unit ) itemStackArrStr ( x . requirements ) ) )
 					ok = true
 				end

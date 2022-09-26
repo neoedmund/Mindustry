@@ -50,6 +50,7 @@ public class DesktopLauncher extends ClientLauncher{
                 }
                 if(Structs.contains(arg, "-debug")){
                     Log.level = LogLevel.debug;
+                    System.out.println("debug log enabled");
                 }
                 setWindowIcon(FileType.internal, "icons/icon_64.png");
             }});
