@@ -187,7 +187,7 @@ public class ConsoleFragment extends Table {
 		history.insert(1, message);
 
 		addMessage("[lightgray]> " + message.replace("[", "[["));
-		if (message.startsWith("aa:")) {
+		if (message.startsWith("aa ")) {
 			String aaCmd = message.substring(3);
 			Object reply = NeoeInject.call("cmdline", aaCmd);
 			addMessage(("" + reply).replace("[", "[["));
