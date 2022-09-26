@@ -18,8 +18,8 @@ public class NeoeInject {
 		} catch (Exception e) {
 			e.printStackTrace();
 			System.err.printf("failed NeoeInject.call(%s, %s)", cmd, Arrays.deepToString(args));
+			return "err:" + e;
 		}
-		return null;
 	}
 
 	private static void init() {

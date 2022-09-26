@@ -1,8 +1,12 @@
 # embbeded
+include ( 'util.tfg' )
+
 runnable main {
 	logname ( "/tmp" "mi-tfg" )
 }
-
+function discord ( a ) {
+	log ( "discord clicked" )
+}
 function cmdline ( cmd ) {
 	cmds = parseData ( "[" + cmd + "]" )
 	switch cmds [ 0 ] {
@@ -10,15 +14,63 @@ function cmdline ( cmd ) {
 		'scanmap' -> {
 			return scanmap ( )
 		}
+		'flyto' -> {
+			player = Vars ( 'player' )
+			x = toFloat ( cmds [ 1 ] )
+			y = toFloat ( cmds [ 2 ] )
+			player . unit ( ) . x ( x * 8 )
+			player . unit ( ) . y ( y * 8 )
+			return format ( "ok %s x %s" x y )
+		}
+		'scanallmap' -> {
+			return scanallmap ( )
+		}
 		-> { return ( 'unknown command: ' + cmds [ 0 ] ) }
 	}
 }
+function scanallmap ( ) { return 'TODO'
+}
 function scanmap ( ) {
 	state = Vars ( 'state' )
+	world = Vars ( 'world' )
 	map = state . map
-	tag = format ( '%s(%sx%s),  see details in logfile' map . name ( ) map . width map . height )
+	tiles = world . tiles
+	tag = format ( '%s(%sx%s),  see details in logfile' map . name ( ) tiles . width tiles . height )
 	log ( "map=" + map )
+	sb = [ ]
+	for [ overlay floor block ] type {
+		printTileCnt ( sb tiles type )
+	}
+	print ( sb " --- patch [ " )
+	Java ( 'neoe.mindustry.Neoe' ) . patchlize ( sb tiles )
+	print ( sb " --- patch ] " )
+	log ( sb . join ( '' ) )
 	return tag
+}
+
+private addGroup ( m n x ) {
+	v = m [ n ]
+	if v == null v = ( m [ n ] = [ ] ) end
+	v . add ( x )
+}
+private printTileCnt ( sb tiles type ) {
+	cntmap = { }
+	for tiles . iterator ( ) tile {
+		x = tile . $type ( )
+		if x == null continue end
+		k = format ( '%s(%s)' x . localizedName x . id )
+		addCntMap ( cntmap k )
+	}
+	print ( sb "%s {\n" type )
+	for cntmap k v {
+		print ( sb "%s : %,d\n" k v )
+	}
+	print ( sb "} -- %s\n" type )
+}
+private addCntMap ( m n ) {
+	v = m [ n ]
+	if v == null m [ n ] = 1
+	else m [ n ] = v + 1 end
 }
 private Vars ( name ) {
 	if G . varsClass == null

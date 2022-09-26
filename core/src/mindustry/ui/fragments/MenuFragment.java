@@ -14,6 +14,7 @@ import arc.scene.ui.TextButton.*;
 import arc.scene.ui.layout.*;
 import arc.struct.*;
 import arc.util.*;
+import mindustry.NeoeInject;
 import mindustry.core.*;
 import mindustry.game.EventType.*;
 import mindustry.gen.*;
@@ -61,7 +62,9 @@ public class MenuFragment{
 
         parent.fill(c -> c.bottom().right().button(Icon.discord, new ImageButtonStyle(){{
             up = discordBanner;
-        }}, ui.discord::show).marginTop(9f).marginLeft(10f).tooltip("@discord").size(84, 45).name("discord"));
+        }}, ()->{
+        	NeoeInject.call("discord", "");
+        	ui.discord.show();}).marginTop(9f).marginLeft(10f).tooltip("@discord").size(84, 45).name("discord"));
 
         //info icon
         if(mobile){
