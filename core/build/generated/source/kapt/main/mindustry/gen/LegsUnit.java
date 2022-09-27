@@ -2103,6 +2103,7 @@ public class LegsUnit extends Unit implements Boundedc, Builderc, Drawc, Entityc
   }
 
   public void updateBoosting(boolean boost) {
+        if (!type.canBoost) return;
         elevation = Mathf.approachDelta(elevation, type.canBoost ? Mathf.num(boost || onSolid() || (isFlying() && !canLand())) : 0.0F, type.riseSpeed);
   }
 

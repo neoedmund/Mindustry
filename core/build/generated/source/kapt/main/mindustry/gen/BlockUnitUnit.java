@@ -1923,6 +1923,7 @@ public class BlockUnitUnit extends Unit implements BlockUnitc, Boundedc, Builder
   }
 
   public void updateBoosting(boolean boost) {
+        if (!type.canBoost) return;
         elevation = Mathf.approachDelta(elevation, type.canBoost ? Mathf.num(boost || onSolid() || (isFlying() && !canLand())) : 0.0F, type.riseSpeed);
   }
 

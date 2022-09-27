@@ -1885,6 +1885,7 @@ public class UnitEntity extends Unit implements Boundedc, Builderc, Drawc, Entit
   }
 
   public void updateBoosting(boolean boost) {
+        if (!type.canBoost) return;
         elevation = Mathf.approachDelta(elevation, type.canBoost ? Mathf.num(boost || onSolid() || (isFlying() && !canLand())) : 0.0F, type.riseSpeed);
   }
 

@@ -10,6 +10,11 @@ https://github.com/Anuken/Mindustry
 -------------
 This is some random dirty hack, no coding rules applied so no push request.
 
+== how to build
+1. `./gradlew` for original build
+2. then use `neoebuild`
+
+
 changes:
 
 1. [QoL] : when select a section, print brief analyzed info into logfile.

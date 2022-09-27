@@ -12,26 +12,27 @@
 		[ mi_annotations annotations { srcDir : [ src/main/java ] cp : [
 					/opt/openlogic-openjdk-8u342-b07-linux-x64/lib/tools.jar
 					/opt/openlogic-openjdk-8u342-b07-linux-x64/jre/lib/rt.jar
-					/opt/github/square/javapoet/dist/javapoet.jar
-					/opt/github/Anuken/Arc/natives/build/libs/natives-1.0.jar
-					/opt/github/Anuken/Arc/extensions/build/libs/extensions-1.0.jar
-					/opt/github/Anuken/Arc/backends/build/libs/backends-1.0.jar
-					/opt/github/Anuken/Arc/arc-core/build/libs/arc-core-1.0.jar
-					/opt/github/Anuken/Arc/natives/natives-box2d-desktop/build/libs/natives-box2d-desktop-1.0.jar
-					/opt/github/Anuken/Arc/natives/natives-desktop/build/libs/natives-desktop-1.0.jar
-					/opt/github/Anuken/Arc/natives/natives-freetype-desktop/build/libs/natives-freetype-desktop-1.0.jar
-					/opt/github/Anuken/Arc/extensions/fx/build/libs/fx-1.0.jar
-					/opt/github/Anuken/Arc/extensions/box2d/build/libs/box2d-1.0.jar
-					/opt/github/Anuken/Arc/extensions/recorder/build/libs/recorder-1.0.jar
-					/opt/github/Anuken/Arc/extensions/freetype/build/libs/freetype-1.0.jar
-					/opt/github/Anuken/Arc/extensions/tiled/build/libs/tiled-1.0.jar
-					/opt/github/Anuken/Arc/extensions/packer/build/libs/packer-1.0.jar
-					/opt/github/Anuken/Arc/extensions/flabel/build/libs/flabel-1.0.jar
-					/opt/github/Anuken/Arc/extensions/profiling/build/libs/profiling-1.0.jar
-					/opt/github/Anuken/Arc/extensions/g3d/build/libs/g3d-1.0.jar
-					/opt/github/Anuken/Arc/extensions/arcnet/build/libs/arcnet-1.0.jar
-					/opt/github/Anuken/Arc/extensions/discord/build/libs/discord-1.0.jar
-					/opt/github/Anuken/Arc/backends/backend-sdl/build/libs/backend-sdl-1.0.jar
+					libs/javapoet.jar
+					libs/natives-1.0.jar
+					libs/extensions-1.0.jar
+					libs/backends-1.0.jar
+					libs/arc-core-1.0.jar
+					libs/natives-box2d-desktop-1.0.jar
+					libs/natives-desktop-1.0.jar
+					libs/natives-freetype-desktop-1.0.jar
+					libs/fx-1.0.jar
+					libs/box2d-1.0.jar
+					libs/recorder-1.0.jar
+					libs/freetype-1.0.jar
+					libs/tiled-1.0.jar
+					libs/packer-1.0.jar
+					libs/flabel-1.0.jar
+					libs/profiling-1.0.jar
+					libs/g3d-1.0.jar
+					libs/arcnet-1.0.jar
+					libs/discord-1.0.jar
+					libs/backend-sdl-1.0.jar
+
 				]
 			} ]
 	]
