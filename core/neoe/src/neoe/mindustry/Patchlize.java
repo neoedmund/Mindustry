@@ -57,13 +57,13 @@ public class Patchlize {
 			v.sort((b, a) -> {
 				int c1 = Integer.compare((int) a[0], (int) b[0]);
 				if (c1 == 0)
-					return Integer.compare((int) a[1], (int) b[1]);
+					return Integer.compare((int) a[2], (int) b[2]);
 				else
 					return c1;
 			});
 			print(sb, "%s patch:%d [\n", name, v.size());
 			for (Object[] r : v) {
-				print(sb, "  cnt:%,d near (%d x %d)\n", r[0], r[1], r[2]);
+				print(sb, "  cnt:%,d near (%d , %d)\n", r[0], r[1], r[2]);
 			}
 			print(sb, "]\n");
 		}

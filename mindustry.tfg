@@ -11,10 +11,10 @@ function cmdline ( cmd ) {
 	cmds = parseData ( "[" + cmd + "]" )
 	switch cmds [ 0 ] {
 		'help' -> { return ( 'what can I do for you?' ) }
-		'scanmap' -> {
+		'scanmap' 'scan' -> {
 			return scanmap ( )
 		}
-		'flyto' -> {
+		'flyto' 'fly' -> {
 			player = Vars ( 'player' )
 			x = toFloat ( cmds [ 1 ] )
 			y = toFloat ( cmds [ 2 ] )
@@ -22,11 +22,31 @@ function cmdline ( cmd ) {
 			player . unit ( ) . y ( y * 8 )
 			return format ( "ok %s x %s" x y )
 		}
+		'save' -> {
+			return doSave ( cmds [ 1 ] )
+		}
 		'scanallmap' -> {
 			return scanallmap ( )
 		}
 		-> { return ( 'unknown command: ' + cmds [ 0 ] ) }
 	}
+}
+function doSave ( tag ) {
+	state = Vars ( 'state' )
+	control = Vars ( 'control' )
+	control . saves . saveSector ( sector = state . rules . sector )
+	srcFile = sector . save . file . file ( )
+	src = srcFile . getAbsolutePath ( )
+	datadir = Vars ( 'dataDirectory' ) . file ( ) . getAbsolutePath ( )
+	t1 = currentMs ( )
+	srcTime = FileObj ( src ) . lastModified ( )
+	if t1 - srcTime > 5000 return 'save too old, sth wrong' end
+	dest = format ( '%s/backsaves/%s.%s' datadir srcFile . getName ( ) tag )
+	if FileObj ( dest ) . exists ( ) return format ( 'File already exists(%s), try another name' dest ) end
+	copyFile ( src dest )
+	dest2 = datadir + '/backsaves/settings.bin.' + tag
+	copyFile ( datadir + "/settings.bin" dest2 )
+	return format ( "saved:\n%s\n%s" dest dest2 )
 }
 function scanallmap ( ) { return 'TODO'
 }
@@ -62,8 +82,12 @@ private printTileCnt ( sb tiles type ) {
 		addCntMap ( cntmap k )
 	}
 	print ( sb "%s {\n" type )
-	for cntmap k v {
-		print ( sb "%s : %,d\n" k v )
+	ks = toList ( cntmap . entrySet ( ) )
+	ks . sort ( -> b a {
+			return a . getValue ( ) - b . getValue ( )
+		} )
+	for ks en {
+		print ( sb "%s : %,d\n" en . getKey ( ) en . getValue ( ) )
 	}
 	print ( sb "} -- %s\n" type )
 }
