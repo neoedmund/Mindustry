@@ -94,7 +94,7 @@ public class Player implements Drawc, Entityc, Playerc, Posc, Syncc, Timerc {
 
   @Annotations.SyncLocal
   public boolean boosting;
-
+  public boolean godmode;
   public Color color = new Color();
 
   @Nullable

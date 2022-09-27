@@ -22,6 +22,11 @@ function cmdline ( cmd ) {
 			player . unit ( ) . y ( y * 8 )
 			return format ( "ok %s x %s" x y )
 		}
+		'god' 'godmode' -> {
+			player = Vars ( 'player' )
+			ret = ( player . godmode = ! player . godmode ) ;
+			return 'godmode ' + ret
+		}
 		'save' -> {
 			return doSave ( cmds [ 1 ] )
 		}

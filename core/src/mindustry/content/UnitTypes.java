@@ -2344,7 +2344,7 @@ public class UnitTypes{
             rotateSpeed = 15f;
             accel = 0.1f;
             itemCapacity = 30;
-            health = 150f;
+            health = 150000f;
             engineOffset = 6f;
             hitSize = 8f;
             alwaysUnlocked = true;
@@ -2356,13 +2356,13 @@ public class UnitTypes{
                 top = false;
                 ejectEffect = Fx.casing1;
 
-                bullet = new BasicBulletType(2.5f, 11){{
+                bullet = new BasicBulletType(2.5f, 110000){{
                     width = 7f;
                     height = 9f;
                     lifetime = 60f;
                     shootEffect = Fx.shootSmall;
                     smokeEffect = Fx.shootSmallSmoke;
-                    buildingDamageMultiplier = 0.01f;
+                    buildingDamageMultiplier = 1;//0.01f;
                 }};
             }});
         }};
@@ -2396,13 +2396,13 @@ public class UnitTypes{
                 shoot.shotDelay = 4f;
                 ejectEffect = Fx.casing1;
 
-                bullet = new BasicBulletType(3f, 11){{
+                bullet = new BasicBulletType(3f, 110000){{
                     width = 7f;
                     height = 9f;
                     lifetime = 60f;
                     shootEffect = Fx.shootSmall;
                     smokeEffect = Fx.shootSmallSmoke;
-                    buildingDamageMultiplier = 0.01f;
+                    buildingDamageMultiplier = 1;//0.01f;
                 }};
             }});
         }};
@@ -2445,7 +2445,7 @@ public class UnitTypes{
                     lifetime = 70f;
                     shootEffect = Fx.shootSmall;
                     smokeEffect = Fx.shootSmallSmoke;
-                    buildingDamageMultiplier = 0.01f;
+                    buildingDamageMultiplier = 1;//0.01f;
                     homingPower = 0.04f;
                 }};
             }});
