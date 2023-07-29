@@ -1,12 +1,10 @@
-![Logo](core/assets-raw/sprites/ui/logo.png)
-
 The automation tower defense RTS, written in Java.
 
 ---------------
 Thanks for source code, the game and the happiness from
 https://github.com/Anuken/Mindustry
 
-
+I almost going to buy a copy of the game, but the author is bad mood animal, so not worth it.
 -------------
 This is some random dirty hack, no coding rules applied so no push request.
 
